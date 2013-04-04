@@ -24,7 +24,6 @@
 
 namespace Math
 {
-	class Vector2;
 	class Vector3;
 	class Vector4;
 
@@ -170,25 +169,6 @@ namespace Math
 		
 		float x, y, z, w;
 	};
-	
-	Vector2::Vector2(Vector3 const &Vec)
-	{
-		x = Vec.x;
-		y = Vec.y;
-	}
-	
-	Vector2::Vector2(Vector4 const &Vec)
-	{
-		x = Vec.x;
-		y = Vec.y;
-	}
-	
-	Vector3::Vector3(Vector4 const &Vec)
-	{
-		x = Vec.x;
-		y = Vec.y;
-		z = Vec.z;
-	}
 
 	// Stream print =======================================
 	
