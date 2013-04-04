@@ -42,8 +42,8 @@ namespace Math
 		inline float LengthSquared() const;
 		inline Vector2 Lerp(Vector2 const &b, float t) const;
 		inline Vector2 Project(Vector2 const &b) const;
-		inline Vector2 Normalize();
-		inline Vector2 Normalize(float l);
+		inline float Normalize();
+		inline float Normalize(float l);
 		inline Vector2 Normalized() const;
 		inline Vector2 Normalized(float l) const;
 		inline bool IsZero() const;
@@ -90,8 +90,8 @@ namespace Math
 		inline float LengthSquared() const;
 		inline Vector3 Lerp(Vector3 const &b, float t) const;
 		inline Vector3 Project(Vector3 const &b) const;
-		inline Vector3 Normalize();
-		inline Vector3 Normalize(float l);
+		inline float Normalize();
+		inline float Normalize(float l);
 		inline Vector3 Normalized() const;
 		inline Vector3 Normalized(float l) const;
 		inline bool IsZero() const;
@@ -136,9 +136,9 @@ namespace Math
 		inline Vector4 Cross(Vector3 const &b) const;
 		inline float Length() const; 					// Calculates 3D length
 		inline float LengthSquared() const;				// Calculates 3D length squared
-		inline Vector4 Normalize();						// Normalizes with 3D length
-		inline Vector4 Normalize(float l);				
-		inline Vector4 NormalizeW();					// Normalizes with w component
+		inline float Normalize();						// Normalizes with 3D length
+		inline float Normalize(float l);				
+		inline float NormalizeW();					// Normalizes with w component
 		inline Vector4 Normalized() const;
 		inline Vector4 Normalized(float l) const;
 		inline Vector4 NormalizedW() const;
@@ -227,16 +227,20 @@ namespace Math
 		return (x * x + y * y);
 	}
 
-	inline Vector2 Vector2::Normalize()
+	inline float Vector2::Normalize()
 	{
-		*this = this->Normalized();
-		return *this;
+		float l = this->Length();
+		
+		x /= l;
+		y /= l;
+		
+		return l;
 	}
 
-	inline Vector2 Vector2::Normalize(float l)
+	inline float Vector2::Normalize(float l)
 	{
 		*this = this->Normalized(l);
-		return *this;
+		return l;
 	}
 
 	inline Vector2 Vector2::Normalized() const
@@ -286,16 +290,21 @@ namespace Math
 		return (x * x + y * y + z * z);
 	}
 
-	inline Vector3 Vector3::Normalize()
+	inline float Vector3::Normalize()
 	{
-		*this = this->Normalized();
-		return *this;
+		float l = this->Length();
+		
+		x /= l;
+		y /= l;
+		z /= l;
+		
+		return l;
 	}
 
-	inline Vector3 Vector3::Normalize(float l)
+	inline float Vector3::Normalize(float l)
 	{
 		*this = this->Normalized(l);
-		return *this;
+		return l;
 	}
 
 	inline Vector3 Vector3::Normalized() const
@@ -348,22 +357,29 @@ namespace Math
 		return (x * x + y * y + z * z);
 	}
 
-	inline Vector4 Vector4::Normalize()
+	inline float Vector4::Normalize()
 	{
-		*this = this->Normalized();
-		return *this;
+		float l = this->Length();
+		
+		x /= l;
+		y /= l;
+		z /= l
+		w = 1.0f;
+		
+		return l;
 	}
 
-	inline Vector4 Vector4::Normalize(float l)
+	inline float Vector4::Normalize(float l)
 	{
 		*this = this->Normalized(l);
-		return *this;
+		return l;
 	}
 	
-	inline Vector4 Vector4::NormalizeW()
+	inline float Vector4::NormalizeW()
 	{
+		float l = w;
 		*this = this->NormalizedW();
-		return *this;
+		return l;
 	}
 	
 	inline Vector4 Vector4::Normalized() const
