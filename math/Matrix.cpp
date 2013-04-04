@@ -355,5 +355,59 @@ Matrix4 Matrix4::Normalized() const
 	Vector4 r3(m[3][0], m[3][1], m[3][2], 1.0f);
 	
 	return Matrix4(r0, r1, r2, r3);
-}	
+}
+
+// Decomposition operations ===============================
+
+Vector2 Matrix2::ScaleComponent() const
+{
+	return Vector2(this->XAxis().Length(), this->YAxis().Length());
+}
+
+Matrix2 Matrix2::RotationComponent() const
+{
+	return this->Normalized();
+}
+
+Vector3 Matrix3::ScaleComponent() const
+{
+	return Vector3(this->XAxis().Length(), this->YAxis().Length(), this->ZAxis().Length());
+}
+	
+Matrix3 Matrix3::RotationComponent() const
+{
+	Matrix3 n = this->Normalized();
+	
+	if (this->IsNegative())
+	{
+		n.SetRow(0, n.XAxis() * -1.0f);
+		n.SetRow(1, n.YAxis() * -1.0f);
+		n.SetRow(2, n.ZAxis() * -1.0f);
+	}
+	
+	return n;
+}
+
+Vector3 Matrix4::ScaleComponent() const
+{
+	return Vector3(this->XAxis().Length(), this->YAxis().Length(), this->ZAxis().Length());
+}
+
+Matrix3 Matrix4::RotationComponent() const
+{
+	return Matrix3(*this).RotationComponent();
+}
+
+Vector3 Matrix4::TranslationComponent() const
+{
+	return this->GetColumn(3);
+}
+
+// Private ================================================
+
+bool Matrix3::IsNegative() const
+{
+	Vector3 z = this->XAxis().Cross(this->YAxis());
+	return (z.Dot(this->ZAxis()) < 0.0f);
+}
 

@@ -45,6 +45,8 @@ namespace Math
 		Matrix2(Matrix4 const &Mat);
 		
 		// General operations
+		inline void SetIdentity();
+		inline void SetZero();
 		float Determinant() const;
 		Matrix2 Adjugate() const;
 		inline Matrix2 Transpose();
@@ -55,6 +57,16 @@ namespace Math
 		Matrix2 Normalized() const;
 		inline Vector2 XAxis() const;
 		inline Vector2 YAxis() const;
+		
+		// Decomposition operations
+		Vector2 ScaleComponent() const;
+		Matrix2 RotationComponent() const;
+		
+		// Access methods
+		inline Vector2 GetRow(int Index) const;
+		inline void SetRow(int Index, Vector2 const &b);
+		inline Vector2 GetColumn(int Index) const;
+		inline void SetColumn(int Index, Vector2 const &b);
 		
 		// Binary and unary multiplication operators
 		inline Matrix2 operator*(Matrix2 const &b) const;
@@ -68,10 +80,6 @@ namespace Math
 		inline Matrix2 &operator/=(float b);
 		
 		float m[2][2];
-		
-		// Utility functions
-		static inline Matrix2 Rotate(float Radians);
-		static inline Matrix2 Scale(float ScaleX, float ScaleY);
 	};	
 	
 	class Matrix3
@@ -86,6 +94,8 @@ namespace Math
 		Matrix3(Matrix4 const &Mat);
 		
 		// General operations
+		inline void SetIdentity();
+		inline void SetZero();
 		float Determinant() const;
 		Matrix3 Adjugate() const;
 		inline Matrix3 Transpose();
@@ -97,6 +107,16 @@ namespace Math
 		inline Vector3 XAxis() const;
 		inline Vector3 YAxis() const;
 		inline Vector3 ZAxis() const;
+		
+		// Decomposition operations
+		Vector3 ScaleComponent() const;
+		Matrix3 RotationComponent() const;
+		
+		// Access methods
+		inline Vector3 GetRow(int Index) const;
+		inline void SetRow(int Index, Vector3 const &b);
+		inline Vector3 GetColumn(int Index) const;
+		inline void SetColumn(int Index, Vector3 const &b);
 		
 		// Binary and unary multiplication operators
 		inline Matrix3 operator*(Matrix3 const &b) const;
@@ -111,9 +131,8 @@ namespace Math
 		
 		float m[3][3];
 		
-		// Utility functions
-		static inline Matrix3 RotateXYZ(float RadiansX, float RadiansY, float RadiansZ);
-		static inline Matrix3 Scale(float ScaleX, float ScaleY, float ScaleZ);
+	private:
+		bool IsNegative() const;
 	};
 
 	class Matrix4
@@ -129,6 +148,8 @@ namespace Math
 		Matrix4(Matrix3 const &Mat);
 
 		// General operations
+		inline void SetIdentity();
+		inline void SetZero();
 		float Determinant() const;
 		Matrix4 Adjugate() const;
 		inline Matrix4 Transpose();
@@ -140,6 +161,17 @@ namespace Math
 		inline Vector3 XAxis() const;
 		inline Vector3 YAxis() const;
 		inline Vector3 ZAxis() const;
+		
+		// Decomposition operations
+		Vector3 ScaleComponent() const;
+		Matrix3 RotationComponent() const;
+		Vector3 TranslationComponent() const;
+		
+		// Access methods
+		inline Vector4 GetRow(int Index) const;
+		inline void SetRow(int Index, Vector4 const &b);
+		inline Vector4 GetColumn(int Index) const;
+		inline void SetColumn(int Index, Vector4 const &b);
 
 		// Binary and unary multiplication operators
 		inline Matrix4 operator*(Matrix4 const &b) const;
@@ -155,10 +187,6 @@ namespace Math
 		float m[4][4];
 
 		// Utility functions
-		static inline Matrix4 RotateXYZ(float RadiansX, float RadiansY, float RadiansZ);
-		static inline Matrix4 Scale(float ScaleX, float ScaleY, float ScaleZ);
-		static inline Matrix4 Translate(float TranslationX, float TranslationY, float TranslationZ);
-		static inline Matrix4 LookAt(Vector3 Eye, Vector3 At, Vector3 Up = Vector3(0.0f, 1.0f, 0.0f));
 	};
 
 	// Stream print =======================================
@@ -189,6 +217,18 @@ namespace Math
 
 	// General operations =================================
 
+	inline void Matrix2::SetIdentity()
+	{
+		m[0][0] = 1.0f; m[0][1] = 0.0f;
+		m[1][0] = 0.0f; m[1][1] = 1.0f;
+	}
+	
+	inline void Matrix2::SetZero()
+	{
+		m[0][0] = 0.0f; m[0][1] = 0.0f;
+		m[1][0] = 0.0f; m[1][1] = 0.0f;
+	}
+
 	inline Matrix2 Matrix2::Transpose()
 	{
 		*this = this->Transposed();
@@ -203,6 +243,20 @@ namespace Math
 		r.m[1][0] = m[0][1]; r.m[1][1] = m[1][1];
 
 		return r;
+	}
+	
+	inline void Matrix3::SetIdentity()
+	{
+		m[0][0] = 1.0f; m[0][1] = 0.0f; m[0][2] = 0.0f;
+		m[1][0] = 0.0f; m[1][1] = 1.0f; m[1][2] = 0.0f;
+		m[2][0] = 0.0f; m[2][1] = 0.0f; m[2][2] = 1.0f;
+	}
+	
+	inline void Matrix3::SetZero()
+	{
+		m[0][0] = 0.0f; m[0][1] = 0.0f; m[0][2] = 0.0f;
+		m[1][0] = 0.0f; m[1][1] = 0.0f; m[1][2] = 0.0f;
+		m[2][0] = 0.0f; m[2][1] = 0.0f; m[2][2] = 0.0f;
 	}
 
 	inline Matrix3 Matrix3::Transpose()
@@ -220,6 +274,22 @@ namespace Math
 		r.m[2][0] = m[0][2]; r.m[2][1] = m[1][2]; r.m[2][2] = m[2][2];
 
 		return r;
+	}
+	
+	inline void Matrix4::SetIdentity()
+	{
+		m[0][0] = 1.0f; m[0][1] = 0.0f; m[0][2] = 0.0f; m[0][3] = 0.0f;
+		m[1][0] = 0.0f; m[1][1] = 1.0f; m[1][2] = 0.0f; m[1][3] = 0.0f;
+		m[2][0] = 0.0f; m[2][1] = 0.0f; m[2][2] = 1.0f; m[2][3] = 0.0f;
+		m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[3][3] = 1.0f;
+	}
+	
+	inline void Matrix4::SetZero()
+	{
+		m[0][0] = 0.0f; m[0][1] = 0.0f; m[0][2] = 0.0f; m[0][3] = 0.0f;
+		m[1][0] = 0.0f; m[1][1] = 0.0f; m[1][2] = 0.0f; m[1][3] = 0.0f;
+		m[2][0] = 0.0f; m[2][1] = 0.0f; m[2][2] = 0.0f; m[2][3] = 0.0f;
+		m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[3][3] = 0.0f;
 	}
 
 	inline Matrix4 Matrix4::Transpose()
@@ -278,6 +348,80 @@ namespace Math
 	inline Vector3 Matrix4::ZAxis() const
 	{
 		return Vector3(m[2][0], m[2][1], m[2][2]);
+	}
+	
+	// Access methods =====================================
+	
+	inline Vector2 Matrix2::GetRow(int Index) const
+	{
+		return Vector2(m[Index][0], m[Index][1]);
+	}
+	
+	inline void Matrix2::SetRow(int Index, Vector2 const &b)
+	{
+		m[Index][0] = b.x;
+		m[Index][1] = b.y;
+	}
+	
+	inline Vector2 Matrix2::GetColumn(int Index) const
+	{
+		return Vector2(m[0][Index], m[1][Index]);
+	}
+	
+	inline void Matrix2::SetColumn(int Index, Vector2 const &b)
+	{
+		m[0][Index] = b.x;
+		m[1][Index] = b.y;
+	}
+	
+	inline Vector3 Matrix3::GetRow(int Index) const
+	{
+		return Vector3(m[Index][0], m[Index][1], m[Index][2]);
+	}
+	
+	inline void Matrix3::SetRow(int Index, Vector3 const &b)
+	{
+		m[Index][0] = b.x;
+		m[Index][1] = b.y;
+		m[Index][2] = b.z;
+	}
+	
+	inline Vector3 Matrix3::GetColumn(int Index) const
+	{
+		return Vector3(m[0][Index], m[1][Index], m[2][Index]);
+	}
+	
+	inline void Matrix3::SetColumn(int Index, Vector3 const &b)
+	{
+		m[0][Index] = b.x;
+		m[1][Index] = b.y;
+		m[2][Index] = b.z;
+	}
+	
+	inline Vector4 Matrix4::GetRow(int Index) const
+	{
+		return Vector4(m[Index][0], m[Index][1], m[Index][2], m[Index][3]);
+	}
+	
+	inline void Matrix4::SetRow(int Index, Vector4 const &b)
+	{
+		m[Index][0] = b.x;
+		m[Index][1] = b.y;
+		m[Index][2] = b.z;
+		m[Index][3] = b.w;
+	}
+	
+	inline Vector4 Matrix4::GetColumn(int Index) const
+	{
+		return Vector4(m[0][Index], m[1][Index], m[2][Index], m[3][Index]);
+	}
+	
+	inline void Matrix4::SetColumn(int Index, Vector4 const &b)
+	{
+		m[0][Index] = b.x;
+		m[1][Index] = b.y;
+		m[2][Index] = b.z;
+		m[3][Index] = b.w;
 	}
 
 	// Binary and unary multiplication operators ==========
@@ -480,7 +624,7 @@ namespace Math
 
 	// Utility functions ==================================
 
-	inline Matrix2 Matrix2::Rotate(float Radians)
+	/*inline Matrix2 Matrix2::Rotate(float Radians)
 	{
 		Matrix2 Rotation;
 
@@ -575,7 +719,7 @@ namespace Math
 							 YAxis.x, YAxis.y, YAxis.z, -YAxis.Dot(Eye),
 							 ZAxis.x, ZAxis.y, ZAxis.z, -ZAxis.Dot(Eye),
 							 0.0f, 0.0f, 0.0f, 1.0f);
-	}
+	}*/
 }
 
 #endif
