@@ -363,7 +363,7 @@ namespace Math
 		
 		x /= l;
 		y /= l;
-		z /= l
+		z /= l;
 		w = 1.0f;
 		
 		return l;
