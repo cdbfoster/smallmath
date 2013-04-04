@@ -180,7 +180,48 @@ Matrix3 Matrix3::Inverted() const
 	return this->Adjugate() / d;
 }
 
-// TODO Matrix4 determinant and adjugate
+float Matrix4::Determinant() const
+{
+	return (m[0][0] * Matrix3(m[1][1], m[1][2], m[1][3],
+							  m[2][1], m[2][2], m[2][3],
+							  m[3][1], m[3][2], m[3][3]).Determinant() -
+			m[0][1] * Matrix3(m[1][0], m[1][2], m[1][3],
+							  m[2][0], m[2][2], m[2][3],
+							  m[3][0], m[3][2], m[3][3]).Determinant() +
+			m[0][2] * Matrix3(m[1][0], m[1][1], m[1][3],
+							  m[2][0], m[2][1], m[2][3],
+							  m[3][0], m[3][1], m[3][3]).Determinant() -
+			m[0][3] * Matrix3(m[1][0], m[1][1], m[1][2],
+							  m[2][0], m[2][1], m[2][2],
+							  m[3][0], m[3][1], m[3][2]).Determinant());
+}
+
+Matrix4 Matrix4::Adjugate() const
+{
+	Matrix4 a;
+	
+	a.m[0][0] =  Matrix3(m[1][1], m[1][2], m[1][3], m[2][1], m[2][2], m[2][3], m[3][1], m[3][2], m[3][3]).Determinant()
+	a.m[1][0] = -Matrix3(m[1][0], m[1][2], m[1][3], m[2][0], m[2][2], m[2][3], m[3][0], m[3][2], m[3][3]).Determinant()
+	a.m[2][0] =  Matrix3(m[1][0], m[1][1], m[1][3], m[2][0], m[2][1], m[2][3], m[3][0], m[3][1], m[3][3]).Determinant()
+	a.m[3][0] = -Matrix3(m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], m[3][0], m[3][1], m[3][2]).Determinant()
+	
+	a.m[0][1] = -Matrix3(m[0][1], m[0][2], m[0][3], m[2][1], m[2][2], m[2][3], m[3][1], m[3][2], m[3][3]).Determinant()
+	a.m[1][1] =  Matrix3(m[0][0], m[0][2], m[0][3], m[2][0], m[2][2], m[2][3], m[3][0], m[3][2], m[3][3]).Determinant()
+	a.m[2][1] = -Matrix3(m[0][0], m[0][1], m[0][3], m[2][0], m[2][1], m[2][3], m[3][0], m[3][1], m[3][3]).Determinant()
+	a.m[3][1] =  Matrix3(m[0][0], m[0][1], m[0][2], m[2][0], m[2][1], m[2][2], m[3][0], m[3][1], m[3][2]).Determinant()
+	
+	a.m[0][2] =  Matrix3(m[0][1], m[0][2], m[0][3], m[1][1], m[1][2], m[1][3], m[3][1], m[3][2], m[3][3]).Determinant()
+	a.m[1][2] = -Matrix3(m[0][0], m[0][2], m[0][3], m[1][0], m[1][2], m[1][3], m[3][0], m[3][2], m[3][3]).Determinant()
+	a.m[2][2] =  Matrix3(m[0][0], m[0][1], m[0][3], m[1][0], m[1][1], m[1][3], m[3][0], m[3][1], m[3][3]).Determinant()
+	a.m[3][2] = -Matrix3(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[3][0], m[3][1], m[3][2]).Determinant()
+	
+	a.m[0][3] = -Matrix3(m[0][1], m[0][2], m[0][3], m[1][1], m[1][2], m[1][3], m[2][1], m[2][2], m[2][3]).Determinant()
+	a.m[1][3] =  Matrix3(m[0][0], m[0][2], m[0][3], m[1][0], m[1][2], m[1][3], m[2][0], m[2][2], m[2][3]).Determinant()
+	a.m[2][3] = -Matrix3(m[0][0], m[0][1], m[0][3], m[1][0], m[1][1], m[1][3], m[2][0], m[2][1], m[2][3]).Determinant()
+	a.m[3][3] =  Matrix3(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2]).Determinant()
+	
+	return a;
+}
 
 Matrix4 Matrix4::Invert()
 {
