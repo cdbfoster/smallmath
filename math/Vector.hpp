@@ -40,6 +40,8 @@ namespace Math
 		inline float Dot(Vector2 const &b) const;
 		inline float Length() const;
 		inline float LengthSquared() const;
+		inline Vector2 Lerp(Vector2 const &b, float t) const;
+		inline Vector2 Project(Vector2 const &b) const;
 		inline Vector2 Normalize();
 		inline Vector2 Normalize(float l);
 		inline Vector2 Normalized() const;
@@ -82,13 +84,12 @@ namespace Math
 		Vector3(Vector4 const &Vec);
 
 		// General operations
-		inline float Dot(Vector2 const &b) const;
 		inline float Dot(Vector3 const &b) const;
-		inline float Dot(Vector4 const &b) const;
 		inline Vector3 Cross(Vector3 const &b) const;
-		inline Vector3 Cross(Vector4 const &b) const;
 		inline float Length() const;
 		inline float LengthSquared() const;
+		inline Vector3 Lerp(Vector3 const &b, float t) const;
+		inline Vector3 Project(Vector3 const &b) const;
 		inline Vector3 Normalize();
 		inline Vector3 Normalize(float l);
 		inline Vector3 Normalized() const;
@@ -101,18 +102,14 @@ namespace Math
 
 		// Binary and unary addition operators
 		inline Vector3 operator+(Vector3 const &b) const;
-		inline Vector3 operator+(Vector4 const &b) const;
 		inline Vector3 operator+(float b) const;
 		inline Vector3 &operator+=(Vector3 const &b);
-		inline Vector3 &operator+=(Vector4 const &b);
 		inline Vector3 &operator+=(float b);
 
 		// Binary and unary subtraction operators
 		inline Vector3 operator-(Vector3 const &b) const;
-		inline Vector3 operator-(Vector4 const &b) const;
 		inline Vector3 operator-(float b) const;
 		inline Vector3 &operator-=(Vector3 const &b);
-		inline Vector3 &operator-=(Vector4 const &b);
 		inline Vector3 &operator-=(float b);
 
 		// Binary and unary multiplication operators
@@ -135,11 +132,8 @@ namespace Math
 		Vector4(Vector3 const &Vec, float w = 1.0f) : x(Vec.x), y(Vec.y), z(Vec.z), w(w) { }
 
 		// General operations
-		inline float Dot(Vector2 const &b) const;
 		inline float Dot(Vector3 const &b) const;
-		inline float Dot(Vector4 const &b) const; 		// Performs 3D dot product
 		inline Vector4 Cross(Vector3 const &b) const;
-		inline Vector4 Cross(Vector4 const &b) const; 	// Performs 3D cross product
 		inline float Length() const; 					// Calculates 3D length
 		inline float LengthSquared() const;				// Calculates 3D length squared
 		inline Vector4 Normalize();						// Normalizes with 3D length
@@ -155,18 +149,14 @@ namespace Math
 		inline float &operator[](int Index);
 
 		// Binary and unary addition operators
-		inline Vector4 operator+(Vector3 const &b) const;
 		inline Vector4 operator+(Vector4 const &b) const;
 		inline Vector4 operator+(float b) const;
-		inline Vector4 &operator+=(Vector3 const &b);
 		inline Vector4 &operator+=(Vector4 const &b);
 		inline Vector4 &operator+=(float b);
 
 		// Binary and unary subtraction operators
-		inline Vector4 operator-(Vector3 const &b) const;
 		inline Vector4 operator-(Vector4 const &b) const;
 		inline Vector4 operator-(float b) const;
-		inline Vector4 &operator-=(Vector3 const &b);
 		inline Vector4 &operator-=(Vector4 const &b);
 		inline Vector4 &operator-=(float b);
 
@@ -273,18 +263,8 @@ namespace Math
 
 		return false;
 	}
-
-	inline float Vector3::Dot(Vector2 const &b) const
-	{
-		return (x * b.x + y * b.y);
-	}
 	
 	inline float Vector3::Dot(Vector3 const &b) const
-	{
-		return (x * b.x + y * b.y + z * b.z);
-	}
-	
-	inline float Vector3::Dot(Vector4 const &b) const
 	{
 		return (x * b.x + y * b.y + z * b.z);
 	}
@@ -294,14 +274,6 @@ namespace Math
 		return Vector3(y * b.z - z * b.y,
 					   z * b.x - x * b.z,
 					   x * b.y - y * b.x);
-	}
-	
-	inline Vector3 Vector3::Cross(Vector4 const &b) const
-	{
-		return Vector4(y * b.z - z * b.y,
-					   z * b.x - x * b.z,
-					   x * b.y - y * b.x,
-					   1.0f);
 	}
 
 	inline float Vector3::Length() const
@@ -353,18 +325,8 @@ namespace Math
 
 		return false;
 	}
-
-	inline float Vector4::Dot(Vector2 const &b) const
-	{
-		return (x * b.x + y * b.y);
-	}
 	
 	inline float Vector4::Dot(Vector3 const &b) const
-	{
-		return (x * b.x + y * b.y + z * b.z);
-	}
-	
-	inline float Vector4::Dot(Vector4 const &b) const
 	{
 		return (x * b.x + y * b.y + z * b.z);
 	}
@@ -374,14 +336,6 @@ namespace Math
 		return Vector4(y * b.z - z * b.y,
 					   z * b.x - x * b.z,
 					   x * b.y - y * b.x);
-	}
-	
-	inline Vector4 Vector4::Cross(Vector4 const &b) const
-	{
-		return Vector4(y * b.z - z * b.y,
-					   z * b.x - x * b.z,
-					   x * b.y - y * b.x,
-					   1.0f);
 	}
 
 	inline float Vector4::Length() const
@@ -513,25 +467,12 @@ namespace Math
 		return Vector3(x + b.x, y + b.y, z + b.z);
 	}
 	
-	inline Vector3 Vector3::operator+(Vector4 const &b) const
-	{
-		return Vector3(x + b.x, y + b.y, z + b.z);
-	}
-
 	inline Vector3 Vector3::operator+(float b) const
 	{
 		return Vector3(x + b, y + b, z + b);
 	}
 
 	inline Vector3 &Vector3::operator+=(Vector3 const &b)
-	{
-		x += b.x;
-		y += b.y;
-		z += b.z;
-		return *this;
-	}
-	
-	inline Vector3 &Vector3::operator+=(Vector4 const &b)
 	{
 		x += b.x;
 		y += b.y;
@@ -546,28 +487,15 @@ namespace Math
 		z += b;
 		return *this;
 	}
-	
-	inline Vector4 Vector4::operator+(Vector3 const &b) const
-	{
-		return Vector4(x + b.x, y + b.y, z + b.z, 1.0f);
-	}
 
 	inline Vector4 Vector4::operator+(Vector4 const &b) const
 	{
-		return Vector4(x + b.x, y + b.y, z + b.z, 1.0f);
+		return Vector4(x + b.x, y + b.y, z + b.z);
 	}
 
 	inline Vector4 Vector4::operator+(float b) const
 	{
-		return Vector4(x + b, y + b, z + b, 1.0f);
-	}
-	
-	inline Vector4 &Vector4::operator+=(Vector3 const &b)
-	{
-		x += b.x;
-		y += b.y;
-		z += b.z;
-		return *this;
+		return Vector4(x + b, y + b, z + b);
 	}
 
 	inline Vector4 &Vector4::operator+=(Vector4 const &b)
@@ -616,11 +544,6 @@ namespace Math
 	{
 		return Vector3(x - b.x, y - b.y, z - b.z);
 	}
-	
-	inline Vector3 Vector3::operator-(Vector4 const &b) const
-	{
-		return Vector3(x - b.x, y - b.y, z - b.z);
-	}
 
 	inline Vector3 Vector3::operator-(float b) const
 	{
@@ -642,28 +565,15 @@ namespace Math
 		z -= b;
 		return *this;
 	}
-	
-	inline Vector4 Vector4::operator-(Vector3 const &b) const
-	{
-		return Vector4(x - b.x, y - b.y, z - b.z, 1.0f);
-	}
 
 	inline Vector4 Vector4::operator-(Vector4 const &b) const
 	{
-		return Vector4(x - b.x, y - b.y, z - b.z, 1.0f);
+		return Vector4(x - b.x, y - b.y, z - b.z);
 	}
 
 	inline Vector4 Vector4::operator-(float b) const
 	{
-		return Vector4(x - b, y - b, z - b, 1.0f);
-	}
-
-	inline Vector4 &Vector4::operator-=(Vector3 const &b)
-	{
-		x -= b.x;
-		y -= b.y;
-		z -= b.z;
-		return *this;
+		return Vector4(x - b, y - b, z - b);
 	}
 
 	inline Vector4 &Vector4::operator-=(Vector4 const &b)

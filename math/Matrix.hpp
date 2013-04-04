@@ -95,7 +95,6 @@ namespace Math
 		// Binary and unary multiplication operators
 		inline Matrix3 operator*(Matrix3 const &b) const;
 		inline Vector3 operator*(Vector3 const &b) const;
-		inline Vector4 operator*(Vector4 const &b) const;
 		inline Matrix3 operator*(float b) const;
 		inline Matrix3 &operator*=(Matrix3 const &b);
 		inline Matrix3 &operator*=(float b);
@@ -135,7 +134,6 @@ namespace Math
 
 		// Binary and unary multiplication operators
 		inline Matrix4 operator*(Matrix4 const &b) const;
-		inline Vector3 operator*(Vector3 const &b) const;
 		inline Vector4 operator*(Vector4 const &b) const;
 		inline Matrix4 operator*(float b) const;
 		inline Matrix4 &operator*=(Matrix4 const &b);
@@ -339,14 +337,6 @@ namespace Math
 					   m[1][0] * b.x + m[1][1] * b.y + m[1][2] * b.z,
 					   m[2][0] * b.x + m[2][1] * b.y + m[2][2] * b.z);
 	}
-
-	inline Vector4 Matrix3::operator*(Vector4 const &b) const
-	{
-		return Vector4(m[0][0] * b.x + m[0][1] * b.y + m[0][2] * b.z,
-					   m[1][0] * b.x + m[1][1] * b.y + m[1][2] * b.z,
-					   m[2][0] * b.x + m[2][1] * b.y + m[2][2] * b.z,
-					   1.0f);
-	}
 	
 	inline Matrix3 Matrix3::operator*(float b) const
 	{
@@ -397,13 +387,6 @@ namespace Math
 		return r;
 	}
 	
-	inline Vector3 Matrix4::operator*(Vector3 const &b) const
-	{
-		return Vector3(m[0][0] * b.x + m[0][1] * b.y + m[0][2] * b.z + m[0][3],
-					   m[1][0] * b.x + m[1][1] * b.y + m[1][2] * b.z + m[1][3],
-					   m[2][0] * b.x + m[2][1] * b.y + m[2][2] * b.z + m[2][3]);
-	}
-
 	inline Vector4 Matrix4::operator*(Vector4 const &b) const
 	{
 		return Vector4(m[0][0] * b.x + m[0][1] * b.y + m[0][2] * b.z + m[0][3] * b.w,
