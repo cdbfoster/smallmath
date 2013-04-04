@@ -32,6 +32,12 @@ Matrix2::Matrix2(float _00, float _01,
 	m[1][0] = _10; m[1][1] = _11;
 }
 
+Matrix2::Matrix2(Vector2 const &r0, Vector2 const &r1)
+{
+	m[0][0] = r0.x; m[0][1] = r0.y;
+	m[1][0] = r1.x; m[1][1] = r1.y;
+}
+
 Matrix2::Matrix2(Matrix3 const &Mat)
 {
 	m[0][0] = Mat.m[0][0]; m[0][1] = Mat.m[0][1];
@@ -58,6 +64,13 @@ Matrix3::Matrix3(float _00, float _01, float _02,
 	m[0][0] = _00; m[0][1] = _01; m[0][2] = _02;
 	m[1][0] = _10; m[1][1] = _11; m[1][2] = _12;
 	m[2][0] = _20; m[2][1] = _21; m[2][2] = _22;
+}
+
+Matrix3::Matrix3(Vector3 const &r0, Vector3 const &r1, Vector3 const &r2)
+{
+	m[0][0] = r0.x; m[0][1] = r0.y; m[0][2] = r0.z;
+	m[1][0] = r1.x; m[1][1] = r1.y; m[1][2] = r1.z;
+	m[2][0] = r2.x; m[2][1] = r2.y; m[2][2] = r2.z;
 }
 
 Matrix3::Matrix3(Matrix2 const &Mat)
@@ -91,6 +104,14 @@ Matrix4::Matrix4(float _00, float _01, float _02, float _03,
 	m[1][0] = _10; m[1][1] = _11; m[1][2] = _12; m[1][3] = _13;
 	m[2][0] = _20; m[2][1] = _21; m[2][2] = _22; m[2][3] = _23;
 	m[3][0] = _30; m[3][1] = _31; m[3][2] = _32; m[3][3] = _33;
+}
+
+Matrix4::Matrix4(Vector4 const &r0, Vector4 const &r1, Vector4 const &r2, Vector4 const &r3)
+{
+	m[0][0] = r0.x; m[0][1] = r0.y; m[0][2] = r0.z; m[0][3] = r0.w;
+	m[1][0] = r1.x; m[1][1] = r1.y; m[1][2] = r1.z; m[1][3] = r1.w;
+	m[2][0] = r2.x; m[2][1] = r2.y; m[2][2] = r2.z; m[2][3] = r2.w;
+	m[3][0] = r3.x; m[3][1] = r3.y; m[3][2] = r3.z; m[3][3] = r3.w;
 }
 
 Matrix4::Matrix4(Matrix2 const &Mat)
@@ -138,6 +159,18 @@ Matrix2 Matrix2::Inverted() const
 	return this->Adjugate() / d;
 }
 
+Matrix2 Matrix2::Normalize()
+{
+	*this = this->Normalized();
+	return *this;
+}
+
+Matrix2 Matrix2::Normalized() const
+{
+	return Matrix2(this->XAxis().Normalized(),
+				   this->YAxis().Normalized());
+}
+
 float Matrix3::Determinant() const
 {
 	return (m[0][0] * (m[1][1] * m[2][2] - m[2][1] * m[1][2]) -
@@ -178,6 +211,19 @@ Matrix3 Matrix3::Inverted() const
 		return Matrix2(); // The matrix is uninvertible
 	
 	return this->Adjugate() / d;
+}
+
+Matrix3 Matrix3::Normalize()
+{
+	*this = this->Normalized();
+	return *this;
+}
+
+Matrix3 Matrix3::Normalized() const
+{
+	return Matrix3(this->XAxis().Normalized(),
+				   this->YAxis().Normalized(),
+				   this->ZAxis().Normalized());
 }
 
 float Matrix4::Determinant() const
@@ -288,3 +334,26 @@ Matrix4 Matrix4::Inverted() const
 
 	return r;
 }
+
+Matrix4 Matrix4::Normalize()
+{
+	*this = this->Normalized();
+	return *this;
+}
+
+Matrix4 Matrix4::Normalized() const
+{
+	float l;
+	
+	Vector4 r0 = this->XAxis();
+	l = r0.Normalize(); r0.w = m[0][3] / l;
+	Vector4 r1 = this->YAxis();
+	l = r1.Normalize(); r1.w = m[1][3] / l;
+	Vector4 r2 = this->ZAxis();
+	l = r2.Normalize(); r2.w = m[2][3] / l;
+	
+	Vector4 r3(m[3][0], m[3][1], m[3][2], 1.0f);
+	
+	return Matrix4(r0, r1, r2, r3);
+}	
+

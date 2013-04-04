@@ -40,16 +40,19 @@ namespace Math
 		Matrix2();
 		Matrix2(float _00, float _01,
 				float _10, float _11);
+		Matrix2(Vector2 const &r0, Vector2 const &r1);
 		Matrix2(Matrix3 const &Mat);
 		Matrix2(Matrix4 const &Mat);
 		
 		// General operations
-		inline Matrix2 Transpose();
-		inline Matrix2 Transposed() const;
 		float Determinant() const;
 		Matrix2 Adjugate() const;
+		inline Matrix2 Transpose();
+		inline Matrix2 Transposed() const;
 		Matrix2 Invert();
 		Matrix2 Inverted() const;
+		Matrix2 Normalize();
+		Matrix2 Normalized() const;
 		inline Vector2 XAxis() const;
 		inline Vector2 YAxis() const;
 		
@@ -78,16 +81,19 @@ namespace Math
 		Matrix3(float _00, float _01, float _02,
 				float _10, float _11, float _12,
 				float _20, float _21, float _22);
+		Matrix3(Vector3 const &r0, Vector3 const &r1, Vector3 const &r2);
 		Matrix3(Matrix2 const &Mat);
 		Matrix3(Matrix4 const &Mat);
 		
 		// General operations
-		inline Matrix3 Transpose();
-		inline Matrix3 Transposed() const;
 		float Determinant() const;
 		Matrix3 Adjugate() const;
+		inline Matrix3 Transpose();
+		inline Matrix3 Transposed() const;
 		Matrix3 Invert();
 		Matrix3 Inverted() const;
+		Matrix3 Normalize();
+		Matrix3 Normalized() const;
 		inline Vector3 XAxis() const;
 		inline Vector3 YAxis() const;
 		inline Vector3 ZAxis() const;
@@ -118,16 +124,19 @@ namespace Math
 				float _10, float _11, float _12, float _13,
 				float _20, float _21, float _22, float _23,
 				float _30, float _31, float _32, float _33);
+		Matrix4(Vector4 const &r0, Vector4 const &r1, Vector4 const &r2, Vector4 const &r3);
 		Matrix4(Matrix2 const &Mat);
 		Matrix4(Matrix3 const &Mat);
 
 		// General operations
-		inline Matrix4 Transpose();
-		inline Matrix4 Transposed() const;
 		float Determinant() const;
 		Matrix4 Adjugate() const;
+		inline Matrix4 Transpose();
+		inline Matrix4 Transposed() const;
 		Matrix4 Invert();
 		Matrix4 Inverted() const;
+		Matrix4 Normalize();
+		Matrix4 Normalized() const;
 		inline Vector3 XAxis() const;
 		inline Vector3 YAxis() const;
 		inline Vector3 ZAxis() const;
