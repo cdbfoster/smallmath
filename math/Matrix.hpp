@@ -18,7 +18,6 @@
 #ifndef MATH_MATRIX
 #define MATH_MATRIX
 
-#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <limits>
