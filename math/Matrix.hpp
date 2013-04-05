@@ -18,9 +18,7 @@
 #ifndef MATH_MATRIX
 #define MATH_MATRIX
 
-#include <cmath>
 #include <iostream>
-#include <limits>
 
 #include "Vector.hpp"
 

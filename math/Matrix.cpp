@@ -15,6 +15,9 @@
 * along with SmallMathLib. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cmath>
+#include <limits>
+
 #include "Matrix.hpp"
 
 using namespace Math;
