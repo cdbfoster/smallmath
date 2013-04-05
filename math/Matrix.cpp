@@ -53,6 +53,24 @@ Matrix2::Matrix2(Matrix4 const &Mat)
 	m[1][0] = Mat.m[1][0]; m[1][1] = Mat.m[1][1];
 }
 
+Matrix2::Matrix2(Vector2 const &Scale)
+{
+	m[0][0] = Scale.x; m[0][1] = 0.0f;
+	m[1][0] = 0.0f; m[1][1] = Scale.y;
+}
+
+Matrix2::Matrix2(float Rotation)
+{
+	m[0][0] = std::cos(Rotation); m[0][1] = -std::sin(Rotation);
+	m[1][0] = std::sin(Rotation); m[1][1] = std::cos(Rotation);
+}
+
+Matrix2::Matrix2(Vector2 const &Scale, float Rotation)
+{
+	m[0][0] = Scale.x * std::cos(Rotation); m[0][1] = Scale.y * -std::sin(Rotation);
+	m[1][0] = Scale.x * std::sin(Rotation); m[1][1] = Scale.y * std::cos(Rotation);
+}
+
 Matrix3::Matrix3()
 {
 	m[0][0] = 1.0f; m[0][1] = 0.0f; m[0][2] = 0.0f;
@@ -89,6 +107,31 @@ Matrix3::Matrix3(Matrix4 const &Mat)
 	m[1][0] = Mat.m[1][0]; m[1][1] = Mat.m[1][1]; m[1][2] = Mat.m[1][2];
 	m[2][0] = Mat.m[2][0]; m[2][1] = Mat.m[2][1]; m[2][2] = Mat.m[2][2];
 }
+
+Matrix3::Matrix3(Vector3 const &Scale)
+{
+	m[0][0] = Scale.x; m[0][1] = 0.0f; m[0][2] = 0.0f;
+	m[1][0] = 0.0f; m[1][1] = Scale.y; m[1][2] = 0.0f;
+	m[2][0] = 0.0f; m[2][1] = 0.0f; m[2][2] = Scale.z;
+}
+
+Matrix3::Matrix3(EulerAngles const &Rotation)
+{
+	Matrix3 r = RotationMatrix(Rotation);
+	
+	m[0][0] = r.m[0][0]; m[0][1] = r.m[0][1]; m[0][2] = r.m[0][2];
+	m[1][0] = r.m[1][0]; m[1][1] = r.m[1][1]; m[1][2] = r.m[1][2];
+	m[2][0] = r.m[2][0]; m[2][1] = r.m[2][1]; m[2][2] = r.m[2][2];
+}
+
+Matrix3::Matrix3(Vector3 const &Scale, EulerAngles const &Rotation)
+{
+	Matrix3 r = RotationMatrix(Rotation) * ScaleMatrix(Scale);
+	
+	m[0][0] = r.m[0][0]; m[0][1] = r.m[0][1]; m[0][2] = r.m[0][2];
+	m[1][0] = r.m[1][0]; m[1][1] = r.m[1][1]; m[1][2] = r.m[1][2];
+	m[2][0] = r.m[2][0]; m[2][1] = r.m[2][1]; m[2][2] = r.m[2][2];
+}	
 
 Matrix4::Matrix4()
 {
@@ -131,6 +174,36 @@ Matrix4::Matrix4(Matrix3 const &Mat)
 	m[1][0] = Mat.m[1][0]; m[1][1] = Mat.m[1][1]; m[1][2] = Mat.m[1][2]; m[2][3] = 0.0f;
 	m[2][0] = Mat.m[2][0]; m[2][1] = Mat.m[2][1]; m[2][2] = Mat.m[2][2]; m[2][3] = 0.0f;
 	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[2][3] = 1.0f;
+}
+
+Matrix4::Matrix4(Vector3 const &Scale, Vector3 const &Translation)
+{
+	Matrix4 r = TranslationMatrix(Translation) * Matrix3(Scale);
+	
+	m[0][0] = r.m[0][0]; m[0][1] = r.m[0][1]; m[0][2] = r.m[0][2]; m[0][3] = r.m[0][3];
+	m[1][0] = r.m[1][0]; m[1][1] = r.m[1][1]; m[1][2] = r.m[1][2]; m[1][3] = r.m[1][3];
+	m[2][0] = r.m[2][0]; m[2][1] = r.m[2][1]; m[2][2] = r.m[2][2]; m[2][3] = r.m[2][3];
+	m[3][0] = r.m[3][0]; m[3][1] = r.m[3][1]; m[3][2] = r.m[3][2]; m[3][3] = r.m[3][3];
+}
+
+Matrix4::Matrix4(EulerAngles const &Rotation)
+{
+	Matrix4 r = Matrix3(Rotation);
+	
+	m[0][0] = r.m[0][0]; m[0][1] = r.m[0][1]; m[0][2] = r.m[0][2]; m[0][3] = r.m[0][3];
+	m[1][0] = r.m[1][0]; m[1][1] = r.m[1][1]; m[1][2] = r.m[1][2]; m[1][3] = r.m[1][3];
+	m[2][0] = r.m[2][0]; m[2][1] = r.m[2][1]; m[2][2] = r.m[2][2]; m[2][3] = r.m[2][3];
+	m[3][0] = r.m[3][0]; m[3][1] = r.m[3][1]; m[3][2] = r.m[3][2]; m[3][3] = r.m[3][3];
+}
+
+Matrix4::Matrix4(Vector3 const &Scale, EulerAngles const &Rotation, Vector3 const &Translation)
+{
+	Matrix4 r = TranslationMatrix(Translation) * Matrix4(Rotation) * Matrix4(Scale);
+	
+	m[0][0] = r.m[0][0]; m[0][1] = r.m[0][1]; m[0][2] = r.m[0][2]; m[0][3] = r.m[0][3];
+	m[1][0] = r.m[1][0]; m[1][1] = r.m[1][1]; m[1][2] = r.m[1][2]; m[1][3] = r.m[1][3];
+	m[2][0] = r.m[2][0]; m[2][1] = r.m[2][1]; m[2][2] = r.m[2][2]; m[2][3] = r.m[2][3];
+	m[3][0] = r.m[3][0]; m[3][1] = r.m[3][1]; m[3][2] = r.m[3][2]; m[3][3] = r.m[3][3];
 }
 
 // General operations =====================================
@@ -412,5 +485,56 @@ bool Matrix3::IsNegative() const
 {
 	Vector3 z = this->XAxis().Cross(this->YAxis());
 	return (z.Dot(this->ZAxis()) < 0.0f);
+}
+
+Matrix3 Matrix3::ScaleMatrix(Vector3 const &Scale)
+{
+	return Matrix3(Scale.x, 0.0f, 0.0f,
+				   0.0f, Scale.y, 0.0f,
+				   0.0f, 0.0f, Scale.z);
+}
+
+Matrix3 Matrix3::RotationMatrix(EulerAngles const &Rotation)
+{
+	Matrix3 XRotation, YRotation, ZRotation;
+
+	if (std::abs(Rotation.x) > std::numeric_limits<float>::epsilon())
+		XRotation = Matrix3(1.0f, 0.0f, 0.0f,
+							0.0f, std::cos(Rotation.x), -std::sin(Rotation.x),
+							0.0f, std::sin(Rotation.x), std::cos(Rotation.x));
+
+	if (std::abs(Rotation.y) > std::numeric_limits<float>::epsilon())
+		YRotation = Matrix3(std::cos(Rotation.y), 0.0f, std::sin(Rotation.y),
+							0.0f, 1.0f, 0.0f,
+							-std::sin(Rotation.y), 0.0f, std::cos(Rotation.y));
+
+	if (std::abs(Rotation.z) > std::numeric_limits<float>::epsilon())
+		ZRotation = Matrix3(std::cos(Rotation.z), -std::sin(Rotation.z), 0.0f,
+							std::sin(Rotation.z), std::cos(Rotation.z), 0.0f,
+							0.0f, 0.0f, 1.0f);
+	
+	switch (Rotation.Order)
+	{
+	case EulerAngles::XYZ:
+		return ZRotation * YRotation * XRotation;
+	case EulerAngles::XZY:
+		return YRotation * ZRotation * XRotation;
+	case EulerAngles::YXZ:
+		return ZRotation * XRotation * YRotation;
+	case EulerAngles::YZX:
+		return XRotation * ZRotation * YRotation;
+	case EulerAngles::ZXY:
+		return YRotation * XRotation * ZRotation;
+	default:
+		return XRotation * YRotation * ZRotation;
+	}
+}
+
+Matrix4 Matrix4::TranslationMatrix(Vector3 const &Translation)
+{
+	return Matrix4(1.0f, 0.0f, 0.0f, Translation.x,
+				   0.0f, 1.0f, 0.0f, Translation.y,
+				   0.0f, 0.0f, 1.0f, Translation.z,
+				   0.0f, 0.0f, 0.0f, 1.0f);
 }
 

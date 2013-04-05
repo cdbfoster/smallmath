@@ -20,6 +20,8 @@
 
 #include <iostream>
 
+#include "EulerAngles.hpp"
+//#include "Quaternion.hpp"
 #include "Vector.hpp"
 
 namespace Math
@@ -28,9 +30,10 @@ namespace Math
 	// correct order: Matrix * Vector.  Also note that matrix stacks are also algebraically correct: First on,
 	// last off.  (ZRotation * YRotation * XRotation) * Vector == (ZRotation * (YRotation * (XRotation * Vector))).
 
-	class Matrix2;
 	class Matrix3;
 	class Matrix4;
+	class EulerAngles;
+	class Quaternion;
 	
 	class Matrix2
 	{
@@ -41,6 +44,9 @@ namespace Math
 		Matrix2(Vector2 const &r0, Vector2 const &r1);
 		Matrix2(Matrix3 const &Mat);
 		Matrix2(Matrix4 const &Mat);
+		Matrix2(Vector2 const &Scale);
+		Matrix2(float Rotation);
+		Matrix2(Vector2 const &Scale, float Rotation);
 		
 		// General operations
 		inline void SetIdentity();
@@ -90,6 +96,9 @@ namespace Math
 		Matrix3(Vector3 const &r0, Vector3 const &r1, Vector3 const &r2);
 		Matrix3(Matrix2 const &Mat);
 		Matrix3(Matrix4 const &Mat);
+		Matrix3(Vector3 const &Scale);
+		Matrix3(EulerAngles const &Rotation);
+		Matrix3(Vector3 const &Scale, EulerAngles const &Rotation);
 		
 		// General operations
 		inline void SetIdentity();
@@ -131,6 +140,8 @@ namespace Math
 		
 	private:
 		bool IsNegative() const;
+		Matrix3 ScaleMatrix(Vector3 const &Scale);
+		Matrix3 RotationMatrix(EulerAngles const &Rotation);
 	};
 
 	class Matrix4
@@ -144,6 +155,9 @@ namespace Math
 		Matrix4(Vector4 const &r0, Vector4 const &r1, Vector4 const &r2, Vector4 const &r3);
 		Matrix4(Matrix2 const &Mat);
 		Matrix4(Matrix3 const &Mat);
+		Matrix4(Vector3 const &Scale, Vector3 const &Translation = Vector3(0.0f, 0.0f, 0.0f));
+		Matrix4(EulerAngles const &Rotation);
+		Matrix4(Vector3 const &Scale, EulerAngles const &Rotation, Vector3 const &Translation);
 
 		// General operations
 		inline void SetIdentity();
@@ -183,8 +197,9 @@ namespace Math
 		inline Matrix4 &operator/=(float b);
 
 		float m[4][4];
-
-		// Utility functions
+	
+	private:
+		Matrix4 TranslationMatrix(Vector3 const &Translation);
 	};
 
 	// Stream print =======================================
@@ -619,105 +634,6 @@ namespace Math
 		
 		return *this;
 	}
-
-	// Utility functions ==================================
-
-	/*inline Matrix2 Matrix2::Rotate(float Radians)
-	{
-		Matrix2 Rotation;
-
-		if (std::abs(Radians) > std::numeric_limits<float>::epsilon())
-			Rotation = Matrix2(std::cos(Radians), -std::sin(Radians),
-							   std::sin(Radians), std::cos(Radians));
-
-		return Rotation;
-	}
-
-	inline Matrix2 Matrix2::Scale(float ScaleX, float ScaleY)
-	{
-		return Matrix2(ScaleX, 0.0f,
-					   0.0f, ScaleY);
-	}
-
-	inline Matrix3 Matrix3::RotateXYZ(float RadiansX, float RadiansY, float RadiansZ)
-	{
-		Matrix3 XRotation, YRotation, ZRotation;
-
-		if (std::abs(RadiansX) > std::numeric_limits<float>::epsilon())
-			XRotation = Matrix3(1.0f, 0.0f, 0.0f,
-								0.0f, std::cos(RadiansX), -std::sin(RadiansX),
-								0.0f, std::sin(RadiansX), std::cos(RadiansX));
-		if (std::abs(RadiansY) > std::numeric_limits<float>::epsilon())
-			YRotation = Matrix3(std::cos(RadiansY), 0.0f, std::sin(RadiansY),
-								0.0f, 1.0f, 0.0f,
-								-std::sin(RadiansY), 0.0f, std::cos(RadiansY));
-		if (std::abs(RadiansZ) > std::numeric_limits<float>::epsilon())
-			ZRotation = Matrix3(std::cos(RadiansZ), -std::sin(RadiansZ), 0.0f,
-								std::sin(RadiansZ), std::cos(RadiansZ), 0.0f,
-								0.0f, 0.0f, 1.0f);
-
-		return ZRotation * YRotation * XRotation;
-	}
-
-	inline Matrix3 Matrix3::Scale(float ScaleX, float ScaleY, float ScaleZ)
-	{
-		return Matrix3(ScaleX, 0.0f, 0.0f,
-					   0.0f, ScaleY, 0.0f,
-					   0.0f, 0.0f, ScaleZ);
-	}
-
-	inline Matrix4 Matrix4::RotateXYZ(float RadiansX, float RadiansY, float RadiansZ)
-	{
-		Matrix4 XRotation, YRotation, ZRotation;
-
-		if (std::abs(RadiansX) > std::numeric_limits<float>::epsilon())
-			XRotation = Matrix4(1.0f, 0.0f, 0.0f, 0.0f,
-								0.0f, std::cos(RadiansX), -std::sin(RadiansX), 0.0f,
-								0.0f, std::sin(RadiansX), std::cos(RadiansX), 0.0f,
-								0.0f, 0.0f, 0.0f, 1.0f);
-		if (std::abs(RadiansY) > std::numeric_limits<float>::epsilon())
-			YRotation = Matrix4(std::cos(RadiansY), 0.0f, std::sin(RadiansY), 0.0f,
-								0.0f, 1.0f, 0.0f, 0.0f,
-								-std::sin(RadiansY), 0.0f, std::cos(RadiansY), 0.0f,
-								0.0f, 0.0f, 0.0f, 1.0f);
-		if (std::abs(RadiansZ) > std::numeric_limits<float>::epsilon())
-			ZRotation = Matrix4(std::cos(RadiansZ), -std::sin(RadiansZ), 0.0f, 0.0f,
-								std::sin(RadiansZ), std::cos(RadiansZ), 0.0f, 0.0f,
-								0.0f, 0.0f, 1.0f, 0.0f,
-								0.0f, 0.0f, 0.0f, 1.0f);
-
-		return ZRotation * YRotation * XRotation;
-	}
-
-	inline Matrix4 Matrix4::Scale(float ScaleX, float ScaleY, float ScaleZ)
-	{
-		return Matrix4(ScaleX, 0.0f, 0.0f, 0.0f,
-					   0.0f, ScaleY, 0.0f, 0.0f,
-					   0.0f, 0.0f, ScaleZ, 0.0f,
-					   0.0f, 0.0f, 0.0f, 1.0f);
-	}
-
-	inline Matrix4 Matrix4::Translate(float TranslationX, float TranslationY, float TranslationZ)
-	{
-		return Matrix4(1.0f, 0.0f, 0.0f, TranslationX,
-					   0.0f, 1.0f, 0.0f, TranslationY,
-					   0.0f, 0.0f, 1.0f, TranslationZ,
-					   0.0f, 0.0f, 0.0f, 1.0f);
-	}
-
-	// Returns the "world to view" matrix for a child space whose origin is Eye in parent space,
-	// whose Z axis is pointing at At in parent space, and whose up-axis is Up in parent space.
-	inline Matrix4 Matrix4::LookAt(Vector3 Eye, Vector3 At, Vector3 Up)
-	{
-		Vector3 ZAxis = (At - Eye).Normalized();
-		Vector3 XAxis = (Up.Cross(ZAxis)).Normalized();
-		Vector3 YAxis = ZAxis.Cross(XAxis);
-
-		return Math::Matrix4(XAxis.x, XAxis.y, XAxis.z, -XAxis.Dot(Eye),
-							 YAxis.x, YAxis.y, YAxis.z, -YAxis.Dot(Eye),
-							 ZAxis.x, ZAxis.y, ZAxis.z, -ZAxis.Dot(Eye),
-							 0.0f, 0.0f, 0.0f, 1.0f);
-	}*/
 }
 
 #endif
