@@ -167,7 +167,7 @@ Matrix4::Matrix4(Matrix2 const &Mat)
 	m[0][0] = Mat.m[0][0]; m[0][1] = Mat.m[0][1]; m[0][2] = 0.0f; m[0][3] = 0.0f;
 	m[1][0] = Mat.m[1][0]; m[1][1] = Mat.m[1][1]; m[1][2] = 0.0f; m[2][3] = 0.0f;
 	m[2][0] = 0.0f; m[2][1] = 0.0f; m[2][2] = 1.0f; m[2][3] = 0.0f;
-	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[2][3] = 1.0f;
+	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[3][3] = 1.0f;
 }
 
 Matrix4::Matrix4(Matrix3 const &Mat)
@@ -175,7 +175,7 @@ Matrix4::Matrix4(Matrix3 const &Mat)
 	m[0][0] = Mat.m[0][0]; m[0][1] = Mat.m[0][1]; m[0][2] = Mat.m[0][2]; m[0][3] = 0.0f;
 	m[1][0] = Mat.m[1][0]; m[1][1] = Mat.m[1][1]; m[1][2] = Mat.m[1][2]; m[2][3] = 0.0f;
 	m[2][0] = Mat.m[2][0]; m[2][1] = Mat.m[2][1]; m[2][2] = Mat.m[2][2]; m[2][3] = 0.0f;
-	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[2][3] = 1.0f;
+	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[3][3] = 1.0f;
 }
 
 Matrix4::Matrix4(Vector3 const &Scale, Vector3 const &Translation)
