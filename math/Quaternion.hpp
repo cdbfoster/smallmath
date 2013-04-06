@@ -47,6 +47,7 @@ namespace Math
 		inline float Dot(Quaternion const &b) const;
 		inline float Magnitude() const;
 		inline float MagnitudeSquared() const;
+		inline Quaternion Slerp(Quaternion const &b, float t) const;
 		inline float Normalize();
 		inline Quaternion Normalized() const;
 		inline Quaternion Conjugate() const;
@@ -109,6 +110,35 @@ namespace Math
 	inline float Quaternion::MagnitudeSquared() const
 	{
 		return (w * w + x * x + y * y + z * z);
+	}
+	
+	inline Quaternion Quaternion::Slerp(Quaternion const &b, float t) const
+	{
+		float CosTheta = this->Dot(b);
+		Quaternion a = *this;
+		
+		if (CosTheta < 0.0f)
+		{
+			CosTheta *= -1.0f;
+			a *= -1.0f;
+		}
+		
+		float ra, rb;
+		
+		if ((1.0f - CosTheta) > std::numeric_limits<float>::epsilon())
+		{
+			float Theta = std::acos(CosTheta);
+			float SinTheta = std::sin(Theta);
+			ra = std::sin((1.0f - t) * Theta) / SinTheta;
+			rb = std::sin(t * Theta) / SinTheta;
+		}
+		else
+		{
+			ra = 1.0f - t;
+			rb = t;
+		}
+		
+		return a * ra + b * rb;
 	}
 	
 	inline float Quaternion::Normalize()
