@@ -137,6 +137,8 @@ namespace Math
 		inline Vector4 Cross(Vector3 const &b) const;
 		inline float Length() const; 					// Calculates 3D length
 		inline float LengthSquared() const;				// Calculates 3D length squared
+		inline Vector4 Lerp(Vector4 const &b, float t) const;
+		inline Vector4 Project(Vector4 const &b) const;
 		inline float Normalize();						// Normalizes with 3D length
 		inline float Normalize(float l);				
 		inline float NormalizeW();					// Normalizes with w component
@@ -208,6 +210,17 @@ namespace Math
 	{
 		return (x * x + y * y);
 	}
+	
+	inline Vector2 Vector2::Lerp(Vector2 const &b, float t) const
+	{
+		return *this * (1.0f - t) + b * t;
+	}
+	
+	inline Vector2 Vector2::Project(Vector2 const &b) const
+	{
+		float t = this->Dot(b) / b.LengthSquared();
+		return b * t;
+	}
 
 	inline float Vector2::Normalize()
 	{
@@ -266,6 +279,17 @@ namespace Math
 	inline float Vector3::LengthSquared() const
 	{
 		return (x * x + y * y + z * z);
+	}
+	
+	inline Vector3 Vector3::Lerp(Vector3 const &b, float t) const
+	{
+		return *this * (1.0f - t) + b * t;
+	}
+	
+	inline Vector3 Vector3::Project(Vector3 const &b) const
+	{
+		float t = this->Dot(b) / b.LengthSquared();
+		return b * t;
 	}
 
 	inline float Vector3::Normalize()
@@ -327,6 +351,17 @@ namespace Math
 	inline float Vector4::LengthSquared() const
 	{
 		return (x * x + y * y + z * z);
+	}
+	
+	inline Vector4 Vector4::Lerp(Vector4 const &b, float t) const
+	{
+		return *this * (1.0f - t) + b * t;
+	}
+	
+	inline Vector4 Vector4::Project(Vector4 const &b) const
+	{
+		float t = this->Dot(b) / b.LengthSquared();
+		return b * t;
 	}
 
 	inline float Vector4::Normalize()
