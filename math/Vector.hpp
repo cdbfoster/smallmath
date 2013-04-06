@@ -227,16 +227,12 @@ namespace Math
 
 	inline Vector2 Vector2::Normalized() const
 	{
-		float l = this->Length();
-
-		return Vector2(x / l,
-					   y / l);
+		return *this / this->Length();
 	}
 
 	inline Vector2 Vector2::Normalized(float l) const
 	{
-		return Vector2(x / l,
-					   y / l);
+		return *this / l;
 	}
 
 	inline bool Vector2::IsZero() const
@@ -291,18 +287,12 @@ namespace Math
 
 	inline Vector3 Vector3::Normalized() const
 	{
-		float l = this->Length();
-
-		return Vector3(x / l,
-					   y / l,
-					   z / l);
+		return *this / this->Length();
 	}
 
 	inline Vector3 Vector3::Normalized(float l) const
 	{
-		return Vector3(x / l,
-					   y / l,
-					   z / l);
+		return *this / l;
 	}
 
 	inline bool Vector3::IsZero() const
@@ -376,10 +366,7 @@ namespace Math
 	
 	inline Vector4 Vector4::Normalized(float l) const
 	{
-		return Vector4(x / l,
-					   y / l,
-					   z / l,
-					   w / l);
+		return *this / l;
 	}
 	
 	inline Vector4 Vector4::NormalizedW() const
