@@ -17,8 +17,8 @@
 * Copyright 2013 Chris Foster
 */
 
-#ifndef MATH_CONSTANTS
-#define MATH_CONSTANTS
+#ifndef SMALLMATHLIB_CONSTANTS
+#define SMALLMATHLIB_CONSTANTS
 
 namespace Math
 {

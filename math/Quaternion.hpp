@@ -17,8 +17,8 @@
 * Copyright 2013 Chris Foster
 */
 
-#ifndef MATH_QUATERNION
-#define MATH_QUATERNION
+#ifndef SMALLMATHLIB_QUATERNION
+#define SMALLMATHLIB_QUATERNION
 
 #include <cmath>
 #include <iostream>

@@ -17,8 +17,8 @@
 * Copyright 2013 Chris Foster
 */
 
-#ifndef MATH_EULERANGLES
-#define MATH_EULERANGLES
+#ifndef SMALLMATHLIB_EULERANGLES
+#define SMALLMATHLIB_EULERANGLES
 
 #include <iostream>
 

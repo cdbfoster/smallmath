@@ -17,8 +17,8 @@
 * Copyright 2013 Chris Foster
 */
 
-#ifndef MATH_MATRIX
-#define MATH_MATRIX
+#ifndef SMALLMATHLIB_MATRIX
+#define SMALLMATHLIB_MATRIX
 
 #include <iostream>
 
