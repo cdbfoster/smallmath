@@ -35,6 +35,11 @@ EulerAngles::EulerAngles(Matrix3 const &Mat)
 	SetFromMatrix3(Mat);
 }
 
+EulerAngles::EulerAngles(Quaternion const &Quat)
+{
+	SetFromMatrix3(Matrix3(Quat));
+}
+
 // Private ================================================
 
 void EulerAngles::SetFromMatrix3(Matrix3 const &Mat)

@@ -23,12 +23,11 @@
 #include <iostream>
 
 #include "Matrix.hpp"
-//#include "Quaternion.hpp"
+#include "Quaternion.hpp"
 #include "Vector.hpp"
 
 namespace Math
 {
-	class Vector3;
 	class Matrix3;
 	class Quaternion;
 	

@@ -23,7 +23,7 @@
 #include <iostream>
 
 #include "EulerAngles.hpp"
-//#include "Quaternion.hpp"
+#include "Quaternion.hpp"
 #include "Vector.hpp"
 
 namespace Math
@@ -100,7 +100,9 @@ namespace Math
 		Matrix3(Matrix4 const &Mat);
 		Matrix3(Vector3 const &Scale);
 		Matrix3(EulerAngles const &Rotation);
+		Matrix3(Quaternion const &Rotation);
 		Matrix3(Vector3 const &Scale, EulerAngles const &Rotation);
+		Matrix3(Vector3 const &Scale, Quaternion const &Rotation);
 		
 		// General operations
 		inline void SetIdentity();
@@ -142,7 +144,6 @@ namespace Math
 		
 	private:
 		bool IsNegative() const;
-		Matrix3 ScaleMatrix(Vector3 const &Scale);
 		Matrix3 RotationMatrix(EulerAngles const &Rotation);
 	};
 
@@ -159,7 +160,9 @@ namespace Math
 		Matrix4(Matrix3 const &Mat);
 		Matrix4(Vector3 const &Scale, Vector3 const &Translation = Vector3(0.0f, 0.0f, 0.0f));
 		Matrix4(EulerAngles const &Rotation);
+		Matrix4(Quaternion const &Rotation);
 		Matrix4(Vector3 const &Scale, EulerAngles const &Rotation, Vector3 const &Translation);
+		Matrix4(Vector3 const &Scale, Quaternion const &Rotation, Vector3 const &Translation);
 
 		// General operations
 		inline void SetIdentity();
