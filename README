@@ -2,5 +2,11 @@ SmallMathLib
 
 A small math library with a few common and robust linear algebra classes that everyone hates writing.
 
+Classes contained in the library include:
+	Vector (2, 3, and 4 dimensional)
+	Matrix (2, 3, and 4 dimensional)
+	EulerAngles
+	Quaternion
+
 Released under the GNU Lesser General Public License.  See COPYING for the full license.
 Copyright 2013 Chris Foster
