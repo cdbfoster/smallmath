@@ -21,8 +21,6 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 	message(FATAL_ERROR "In-source builds are not allowed!")
 endif()
 
-set(CMAKE_CXX_FLAGS "-Wall")
-
 # Setup ===================================================
 
 project(SmallMathLib)
@@ -32,6 +30,17 @@ set(INCLUDE_OUTPUT_PATH "${PROJECT_OUTPUT_PATH}/include")
 set(LIBRARY_OUTPUT_PATH "${PROJECT_OUTPUT_PATH}/lib")
 
 option(BUILD_STATIC "Build the library for static linking.  Otherwise a shared library will be built." FALSE)
+
+if(MSVC)
+	# Remove copious amounts of useless warnings
+	if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+		string(REGEX REPLACE "/W[0-4]" "/W3" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+	else()
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3")
+	endif()
+else(MSVC)
+	set(CMAKE_CXX_FLAGS "-g -Wall")
+endif(MSVC)
 
 # Source ==================================================
 
