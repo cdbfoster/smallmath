@@ -1,1 +1,6 @@
-SmallMathLib... More later
+SmallMathLib
+
+A small math library with a few common and robust linear algebra classes that everyone hates writing.
+
+Released under the GNU Lesser General Public License.  See COPYING for the full license.
+Copyright 2013 Chris Foster
