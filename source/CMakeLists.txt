@@ -16,18 +16,18 @@
 # Copyright 2013 Chris Foster
 
 set(math_include
-	Constants.hpp
-	EulerAngles.hpp
-	Matrix.hpp
-	Quaternion.hpp
-	Vector.hpp
+	math/Constants.hpp
+	math/EulerAngles.hpp
+	math/Matrix.hpp
+	math/Quaternion.hpp
+	math/Vector.hpp
 )
 
 set(math_source
-	EulerAngles.cpp
-	Matrix.cpp
-	Quaternion.cpp
-	Vector.cpp
+	math/EulerAngles.cpp
+	math/Matrix.cpp
+	math/Quaternion.cpp
+	math/Vector.cpp
 )
 
 if(BUILD_STATIC)
