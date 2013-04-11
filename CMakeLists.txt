@@ -1,17 +1,17 @@
-# This file is part of SmallMathLib.
+# This file is part of SmallMath.
 #
-# SmallMathLib is free software: you can redistribute it and/or modify
+# SmallMath is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# SmallMathLib is distributed in the hope that it will be useful,
+# SmallMath is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License
-# along with SmallMathLib. If not, see <http://www.gnu.org/licenses/>.
+# along with SmallMath. If not, see <http://www.gnu.org/licenses/>.
 #
 # Copyright 2013 Chris Foster
 
@@ -23,9 +23,9 @@ endif()
 
 # Setup ===================================================
 
-project(SmallMathLib)
+project(SmallMath)
 
-set(PROJECT_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/smallmathlib")
+set(PROJECT_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/smallmath")
 set(INCLUDE_OUTPUT_PATH "${PROJECT_OUTPUT_PATH}/include/math")
 set(LIBRARY_OUTPUT_PATH "${PROJECT_OUTPUT_PATH}/lib")
 
