@@ -17,7 +17,7 @@
 * Copyright 2013 Chris Foster
 */
 
-#include "Quaternion.hpp"
+#include "math/Quaternion.hpp"
 
 using namespace Math;
 

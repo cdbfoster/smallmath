@@ -20,7 +20,7 @@
 #include <cmath>
 #include <limits>
 
-#include "EulerAngles.hpp"
+#include "math/EulerAngles.hpp"
 
 using namespace Math;
 

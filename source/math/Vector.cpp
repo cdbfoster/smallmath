@@ -17,7 +17,7 @@
 * Copyright 2013 Chris Foster
 */
 
-#include "Vector.hpp"
+#include "math/Vector.hpp"
 
 using namespace Math;
 

@@ -22,9 +22,9 @@
 
 #include <iostream>
 
-#include "EulerAngles.hpp"
-#include "Quaternion.hpp"
-#include "Vector.hpp"
+#include "math/EulerAngles.hpp"
+#include "math/Quaternion.hpp"
+#include "math/Vector.hpp"
 
 namespace Math
 {

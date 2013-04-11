@@ -24,9 +24,9 @@
 #include <iostream>
 #include <limits>
 
-#include "EulerAngles.hpp"
-#include "Matrix.hpp"
-#include "Vector.hpp"
+#include "math/EulerAngles.hpp"
+#include "math/Matrix.hpp"
+#include "math/Vector.hpp"
 
 namespace Math
 {

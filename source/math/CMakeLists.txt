@@ -30,6 +30,10 @@ set(math_source
 	Vector.cpp
 )
 
+# To allow us to include files with #include "math/File"
+set(SOURCE "..")
+include_directories(${SOURCE})
+
 if(BUILD_STATIC)
 	add_library(smallmathlib STATIC ${math_include} ${math_source})
 else()

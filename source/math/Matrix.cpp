@@ -20,8 +20,8 @@
 #include <cmath>
 #include <limits>
 
-#include "Constants.hpp"
-#include "Matrix.hpp"
+#include "math/Constants.hpp"
+#include "math/Matrix.hpp"
 
 using namespace Math;
 
