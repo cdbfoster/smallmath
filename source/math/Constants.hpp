@@ -30,4 +30,3 @@ namespace Math
 }
 
 #endif
- 

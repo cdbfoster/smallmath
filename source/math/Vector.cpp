@@ -39,4 +39,3 @@ Vector3::Vector3(Vector4 const &Vec)
 	y = Vec.y;
 	z = Vec.z;
 }
-

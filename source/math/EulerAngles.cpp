@@ -26,18 +26,20 @@ using namespace Math;
 
 EulerAngles::EulerAngles(Vector3 const &Vec, TransformOrder Order)
 {
-	x = Vec.x; y = Vec.y; z = Vec.z;
+	x = Vec.x;
+	y = Vec.y;
+	z = Vec.z;
 	EulerAngles::Order = Order;
 }
 
 EulerAngles::EulerAngles(Matrix3 const &Mat)
 {
-	SetFromMatrix3(Mat);
+	this->SetFromMatrix3(Mat);
 }
 
 EulerAngles::EulerAngles(Quaternion const &Quat)
 {
-	SetFromMatrix3(Matrix3(Quat));
+	this->SetFromMatrix3(Matrix3(Quat));
 }
 
 // Private ================================================
@@ -46,15 +48,15 @@ void EulerAngles::SetFromMatrix3(Matrix3 const &Mat)
 {
 	Matrix3 Rotation = Mat.RotationComponent();
 	EulerAngles e1, e2;
-	
+
 	float CosY = std::sqrt(Rotation.m[0][0] * Rotation.m[0][0] + Rotation.m[1][0] * Rotation.m[1][0]);
-	
+
 	if (CosY > 8.0f * std::numeric_limits<float>::epsilon())
 	{
 		e1.x = std::atan2(Rotation.m[2][1], Rotation.m[2][2]);
 		e1.y = std::atan2(-Rotation.m[2][0], CosY);
 		e1.z = std::atan2(Rotation.m[1][0], Rotation.m[0][0]);
-		
+
 		e2.x = std::atan2(-Rotation.m[2][1], -Rotation.m[2][2]);
 		e2.y = std::atan2(-Rotation.m[2][0], -CosY);
 		e2.z = std::atan2(-Rotation.m[1][0], -Rotation.m[0][0]);
@@ -64,24 +66,23 @@ void EulerAngles::SetFromMatrix3(Matrix3 const &Mat)
 		e1.x = std::atan2(-Rotation.m[1][2], Rotation.m[1][1]);
 		e1.y = std::atan2(-Rotation.m[2][0], CosY);
 		e1.z = 0.0f;
-		
+
 		e2 = e1;
 	}
-	
+
 	// Select the one with the lowest values
 	if (std::abs(e1.x) + std::abs(e1.y) + std::abs(e1.z) > std::abs(e2.x) + std::abs(e2.y) + std::abs(e2.z))
 	{
-		x = e2.x;
-		y = e2.y;
-		z = e2.z;
+		this->x = e2.x;
+		this->y = e2.y;
+		this->z = e2.z;
 	}
 	else
 	{
-		x = e1.x;
-		y = e1.y;
-		z = e1.z;
+		this->x = e1.x;
+		this->y = e1.y;
+		this->z = e1.z;
 	}
-	
-	Order = XYZ;
-}
 
+	this->Order = XYZ;
+}
