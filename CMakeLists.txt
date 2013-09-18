@@ -43,8 +43,8 @@ else(MSVC)
 endif(MSVC)
 
 if(BUILD_INTERNAL)
-	set_property(GLOBAL PROPERTY SMALLWIDGETS_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/source")
-	set_property(GLOBAL PROPERTY SMALLWIDGETS_LIBRARY "smallmath")
+	set_property(GLOBAL PROPERTY SMALLMATH_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/source")
+	set_property(GLOBAL PROPERTY SMALLMATH_LIBRARY "smallmath")
 endif()
 
 # Source ==================================================
