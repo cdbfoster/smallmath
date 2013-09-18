@@ -42,6 +42,11 @@ else(MSVC)
 	set(CMAKE_CXX_FLAGS "-g -Wall")
 endif(MSVC)
 
+if(BUILD_INTERNAL)
+	set_property(GLOBAL PROPERTY SMALLWIDGETS_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/source")
+	set_property(GLOBAL PROPERTY SMALLWIDGETS_LIBRARY "smallmath")
+endif()
+
 # Source ==================================================
 
 add_subdirectory(source)

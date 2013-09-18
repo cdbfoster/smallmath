@@ -40,6 +40,8 @@ else()
 	add_library(smallmath SHARED ${math_include} ${math_source})
 endif()
 
-install(FILES ${math_include}
-		DESTINATION ${INCLUDE_OUTPUT_PATH}
-)
+if(NOT BUILD_INTERNAL)
+	install(FILES ${math_include}
+			DESTINATION ${INCLUDE_OUTPUT_PATH}
+	)
+endif()
