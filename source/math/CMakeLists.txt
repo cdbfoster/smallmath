@@ -42,6 +42,6 @@ endif()
 
 if(NOT BUILD_INTERNAL)
 	install(FILES ${math_include}
-			DESTINATION ${INCLUDE_OUTPUT_PATH}
+			DESTINATION ${INCLUDE_INSTALL_DIRECTORY}
 	)
 endif()

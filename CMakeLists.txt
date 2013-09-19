@@ -25,9 +25,10 @@ endif()
 
 project(SmallMath)
 
-set(PROJECT_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/smallmath")
-set(INCLUDE_OUTPUT_PATH "${PROJECT_OUTPUT_PATH}/include/math")
-set(LIBRARY_OUTPUT_PATH "${PROJECT_OUTPUT_PATH}/lib")
+set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin/smallmath")
+set(INCLUDE_INSTALL_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/include/math")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/lib")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 
 option(BUILD_STATIC "Build the library for static linking.  Otherwise a shared library will be built." TRUE)
 
