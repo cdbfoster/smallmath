@@ -66,12 +66,19 @@ namespace Math
 		inline Vector2 &operator-=(float b);
 
 		// Binary and unary multiplication operators
+		inline Vector2 operator*(Vector2 const &b) const;
 		inline Vector2 operator*(float b) const;
+		inline Vector2 &operator*=(Vector2 const &b);
 		inline Vector2 &operator*=(float b);
 
 		// Binary and unary division operators
+		inline Vector2 operator/(Vector2 const &b) const;
 		inline Vector2 operator/(float b) const;
+		inline Vector2 &operator/=(Vector2 const &b);
 		inline Vector2 &operator/=(float b);
+
+		// Equality operator
+		inline bool operator==(Vector2 const &b) const;
 
 		float x, y;
 	};
@@ -114,12 +121,19 @@ namespace Math
 		inline Vector3 &operator-=(float b);
 
 		// Binary and unary multiplication operators
+		inline Vector3 operator*(Vector3 const &b) const;
 		inline Vector3 operator*(float b) const;
+		inline Vector3 &operator*=(Vector3 const &b);
 		inline Vector3 &operator*=(float b);
 
 		// Binary and unary division operators
+		inline Vector3 operator/(Vector3 const &b) const;
 		inline Vector3 operator/(float b) const;
+		inline Vector3 &operator/=(Vector3 const &b);
 		inline Vector3 &operator/=(float b);
+
+		// Equality operator
+		inline bool operator==(Vector3 const &b) const;
 
 		float x, y, z;
 	};
@@ -164,12 +178,19 @@ namespace Math
 		inline Vector4 &operator-=(float b);
 
 		// Binary and unary multiplication operators
+		inline Vector4 operator*(Vector4 const &b) const;
 		inline Vector4 operator*(float b) const;
+		inline Vector4 &operator*=(Vector4 const &b);
 		inline Vector4 &operator*=(float b);
 
 		// Binary and unary division operators
+		inline Vector4 operator/(Vector4 const &b) const;
 		inline Vector4 operator/(float b) const;
+		inline Vector4 &operator/=(Vector4 const &b);
 		inline Vector4 &operator/=(float b);
+
+		// Equality operator
+		inline bool operator==(Vector4 const &b) const;
 
 		float x, y, z, w;
 	};
@@ -534,7 +555,7 @@ namespace Math
 		return *this;
 	}
 
-	// Binary and unary subtraction operators
+	// Binary and unary subtraction operators =============
 
 	inline Vector2 Vector2::operator-(Vector2 const &b) const
 	{
@@ -614,9 +635,21 @@ namespace Math
 
 	// Binary and unary multiplication operators ==========
 
+	inline Vector2 Vector2::operator*(Vector2 const &b) const
+	{
+		return Vector2(x * b.x, y * b.y);
+	}
+
 	inline Vector2 Vector2::operator*(float b) const
 	{
 		return Vector2(x * b, y * b);
+	}
+
+	inline Vector2 &Vector2::operator*=(Vector2 const &b)
+	{
+		x *= b.x;
+		y *= b.y;
+		return *this;
 	}
 
 	inline Vector2 &Vector2::operator*=(float b)
@@ -626,9 +659,22 @@ namespace Math
 		return *this;
 	}
 
+	inline Vector3 Vector3::operator*(Vector3 const &b) const
+	{
+		return Vector3(x * b.x, y * b.y, z * b.z);
+	}
+
 	inline Vector3 Vector3::operator*(float b) const
 	{
 		return Vector3(x * b, y * b, z * b);
+	}
+
+	inline Vector3 &Vector3::operator*=(Vector3 const &b)
+	{
+		x *= b.x;
+		y *= b.y;
+		z *= b.z;
+		return *this;
 	}
 
 	inline Vector3 &Vector3::operator*=(float b)
@@ -639,9 +685,23 @@ namespace Math
 		return *this;
 	}
 
+	inline Vector4 Vector4::operator*(Vector4 const &b) const
+	{
+		return Vector4(x * b.x, y * b.y, z * b.z, w * b.w);
+	}
+
 	inline Vector4 Vector4::operator*(float b) const
 	{
 		return Vector4(x * b, y * b, z * b, 1.0f);
+	}
+
+	inline Vector4 &Vector4::operator*=(Vector4 const &b)
+	{
+		x *= b.x;
+		y *= b.y;
+		z *= b.z;
+		w *= b.w;
+		return *this;
 	}
 
 	inline Vector4 &Vector4::operator*=(float b)
@@ -654,9 +714,21 @@ namespace Math
 
 	// Binary and unary division operators ================
 
+	inline Vector2 Vector2::operator/(Vector2 const &b) const
+	{
+		return Vector2(x / b.x, y / b.y);
+	}
+
 	inline Vector2 Vector2::operator/(float b) const
 	{
 		return Vector2(x / b, y / b);
+	}
+
+	inline Vector2 &Vector2::operator/=(Vector2 const &b)
+	{
+		x /= b.x;
+		y /= b.y;
+		return *this;
 	}
 
 	inline Vector2 &Vector2::operator/=(float b)
@@ -666,9 +738,22 @@ namespace Math
 		return *this;
 	}
 
+	inline Vector3 Vector3::operator/(Vector3 const &b) const
+	{
+		return Vector3(x / b.x, y / b.y, z / b.z);
+	}
+
 	inline Vector3 Vector3::operator/(float b) const
 	{
 		return Vector3(x / b, y / b, z / b);
+	}
+
+	inline Vector3 &Vector3::operator/=(Vector3 const &b)
+	{
+		x /= b.x;
+		y /= b.y;
+		z /= b.z;
+		return *this;
 	}
 
 	inline Vector3 &Vector3::operator/=(float b)
@@ -679,9 +764,23 @@ namespace Math
 		return *this;
 	}
 
+	inline Vector4 Vector4::operator/(Vector4 const &b) const
+	{
+		return Vector4(x / b.x, y / b.y, z / b.z, w / b.w);
+	}
+
 	inline Vector4 Vector4::operator/(float b) const
 	{
 		return Vector4(x / b, y / b, z / b, 1.0f);
+	}
+
+	inline Vector4 &Vector4::operator/=(Vector4 const &b)
+	{
+		x /= b.x;
+		y /= b.y;
+		z /= b.z;
+		w /= b.w;
+		return *this;
 	}
 
 	inline Vector4 &Vector4::operator/=(float b)
@@ -690,6 +789,23 @@ namespace Math
 		y /= b;
 		z /= b;
 		return *this;
+	}
+
+	// Equality operators =================================
+
+	inline bool Vector2::operator==(Vector2 const &b) const
+	{
+		return (*this - b).IsZero();
+	}
+
+	inline bool Vector3::operator==(Vector3 const &b) const
+	{
+		return (*this - b).IsZero();
+	}
+
+	inline bool Vector4::operator==(Vector4 const &b) const
+	{
+		return (*this - b).IsZero();
 	}
 }
 
